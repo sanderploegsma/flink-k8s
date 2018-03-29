@@ -11,6 +11,12 @@ If you want to see the JobManager UI, you can forward its port to your local mac
 
     kubectl port-forward <jobmanager-podname> 8081
     
+You can safely scale the TaskManagers:
+       
+    kubectl scale deployment flink-taskmanager --replicas=4
+    
+When scaling down, note that it might take a while before the JobManager removes the TaskManagers from its internal state.
+    
 #### Running the example app
 Build the Docker image:
 

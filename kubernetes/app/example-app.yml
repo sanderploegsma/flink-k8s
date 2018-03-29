@@ -3,11 +3,15 @@ kind: Job
 metadata:
   name: example-app
 spec:
+  # Make sure not to increase this, or multiple jobs will be submitted.
   parallelism: 1
   template:
+    metadata:
+      name: example-app
     spec:
       containers:
       - name: example-app
         image: example-app
+        # We don't want Minikube to try pulling the Docker image
         imagePullPolicy: Never
       restartPolicy: Never

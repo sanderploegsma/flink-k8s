@@ -25,15 +25,15 @@ spec:
           name: query
         - containerPort: 8081
           name: ui
-        env:
-        - name: JOB_MANAGER_RPC_ADDRESS
-          value: flink-jobmanager
         livenessProbe:
           httpGet:
             path: /
             port: 8081
           initialDelaySeconds: 3
           periodSeconds: 3
+        env:
+        - name: JOB_MANAGER_RPC_ADDRESS
+          value: flink-jobmanager
 ---
 apiVersion: v1
 kind: Service
