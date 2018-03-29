@@ -1,0 +1,46 @@
+buildscript {
+    ext {
+        flink_version = '1.4.2'
+        kotlin_version = '1.2.31'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+group 'nl.sanderp'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    compile "org.apache.flink:flink-core:$flink_version"
+    compile "org.apache.flink:flink-java:$flink_version"
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "nl.sanderp.flink.MainKt"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}

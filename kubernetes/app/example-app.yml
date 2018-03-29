@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: example-app
+spec:
+  parallelism: 1
+  template:
+    spec:
+      containers:
+      - name: example-app
+        image: example-app
+        imagePullPolicy: Never
+      restartPolicy: Never
