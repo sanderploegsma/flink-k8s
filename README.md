@@ -2,7 +2,7 @@
 This repository is a sample setup to run an Apache Flink cluster in Kubernetes. The `example-app` directory contains a simple Flink job we will submit to the cluster.
 
 
-#### Setting up the Flink cluster
+### Setting up the Flink cluster
 Set up the Flink cluster, this will create a single JobManager and 2 TaskManagers:
 
     kubectl apply -f kubernetes/flink
@@ -17,7 +17,7 @@ You can safely scale the TaskManagers:
     
 When scaling down, note that it might take a while before the JobManager removes the TaskManagers from its internal state.
     
-#### Running the example app
+### Running the example app
 Build the Docker image:
 
     eval $(minikube docker-env)
