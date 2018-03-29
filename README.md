@@ -1,6 +1,7 @@
 # Flink on Kubernetes
 This repository is a sample setup to run an Apache Flink cluster in Kubernetes. The `example-app` directory contains a simple Flink job we will submit to the cluster.
 
+## Setup using Minikube
 
 ### Setting up the Flink cluster
 Set up the Flink cluster, this will create a single JobManager and 2 TaskManagers:
