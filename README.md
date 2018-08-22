@@ -1,30 +1,25 @@
 # Flink on Kubernetes
-This repository is a sample setup to run an Apache Flink cluster in Kubernetes. The `example-app` directory contains a simple Flink job we will submit to the cluster.
+This repository is a sample setup to run an Apache Flink job in Kubernetes.
 
-## Setup using Minikube
+It uses the new StandaloneJob entry point introduced in Flink 1.6.0 which means that when the JobManager starts,
+it will automatically run the job that is packaged in the JAR. 
 
-### Setting up the Flink cluster
-Set up the Flink cluster, this will create a single JobManager and 2 TaskManagers:
+## Setup
+First, compile the example application
 
-    kubectl apply -f kubernetes/flink
+    mvn clean package
+    
+Then, make sure you build the Docker image and make it available to your Kubernetes cluster.
+When the Docker image is available, set up the Flink cluster by applying all manifests from the `kubernetes` folder:
+
+    kubectl apply -f kubernetes
     
 If you want to see the JobManager UI, you can forward its port to your local machine:
 
     kubectl port-forward <jobmanager-podname> 8081
     
-You can safely scale the TaskManagers:
+You can safely scale the TaskManagers up or down:
        
     kubectl scale deployment flink-taskmanager --replicas=4
     
-When scaling down, note that it might take a while before the JobManager removes the TaskManagers from its internal state.
-    
-### Running the example app
-Build the Docker image:
-
-    eval $(minikube docker-env)
-    docker build -t example-app .
-    
-The image will submit the application JAR to the Flink cluster when started, so we can run it using a Kubernetes Job resource, which will terminate once completed successfully.
-    
-    kubectl apply -f kubernetes/app
-    
+As soon as the required number of task slots are available the job will start running.

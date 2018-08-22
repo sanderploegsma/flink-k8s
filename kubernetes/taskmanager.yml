@@ -12,9 +12,10 @@ spec:
     spec:
       containers:
       - name: taskmanager
-        image: flink:1.4.2-alpine
-        args:
-        - taskmanager
+        image: sanderp/flink-k8s:latest
+        command:
+        - /opt/flink/bin/taskmanager.sh
+        - start-foreground
         ports:
         - containerPort: 6121
           name: data
@@ -22,6 +23,11 @@ spec:
           name: rpc
         - containerPort: 6125
           name: query
-        env:
-        - name: JOB_MANAGER_RPC_ADDRESS
-          value: flink-jobmanager
+        volumeMounts:
+        - name: config
+          mountPath: /opt/flink/conf/flink-conf.yaml
+          subPath: flink-conf.yaml
+      volumes:
+      - name: config
+        configMap:
+          name: flink-config

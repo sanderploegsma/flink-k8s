@@ -1,4 +1,4 @@
-package nl.sanderp.flink
+package com.github.sanderploegsma.flink
 
 import org.apache.flink.api.java.ExecutionEnvironment
 import org.apache.flink.api.java.functions.KeySelector
